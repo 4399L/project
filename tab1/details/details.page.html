@@ -1,0 +1,393 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" [routerLink]="['/tab1']">
+      <ion-button>
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+        返回
+      </ion-button>
+    </ion-buttons>
+    <ion-title>商品详情</ion-title>
+    <ion-buttons *ngIf="update" slot="end" (click)="edit2()">
+      <ion-button>
+        <ion-icon name="close-outline"></ion-icon>
+        取消
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons (click)="edit1()" slot="end">
+      <ion-button *ngIf="!update">
+        <ion-icon name="pencil-outline"></ion-icon>
+        编辑
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="onSubmit()" [disabled]="!form.valid" *ngIf="update">
+        <ion-icon name="save-outline"></ion-icon>
+        保存
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label class="md_4">账户：</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label class="md_1">{{accountId}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label class="md_4">供应商：</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label class="md_1">{{supplierName}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label class="md_4">门店：</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label class="md_1">{{shopName}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label class="md_4">款号：</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label class="md_1">{{styleNumber}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label class="md_4">图片：</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label class="md_1">{{photo}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label *ngIf="badge" class="md_5">数量：</ion-label>
+          <ion-label *ngIf="!badge" class="md_4">数量：</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label *ngIf="badge" class="md_6">{{quantity}}&nbsp;&nbsp;&nbsp;&nbsp;<ion-badge color="danger">即将售罄
+            </ion-badge>
+          </ion-label>
+          <ion-label *ngIf="!badge" class="md_1">{{quantity}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label class="md_4">成本：</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label class="md_1">{{cost}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label class="md_4">售价：</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label class="md_1">{{price}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label class="md_4">名称：</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label class="md_1">{{name}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label class="md_4">颜色：</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label class="md_1">{{color}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label class="md_4">尺码：</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label class="md_1">{{size}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label class="md_4">类型：</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label class="md_1">{{type}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label class="md_4">标记：</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label class="md_1">{{tag}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label class="md_4">状态：</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label class="md_1">{{status}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label class="md_4">上架时间：</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label class="md_1">{{upTime}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label class="md_4">下架时间：</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label class="md_1">{{downTime}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item> -->
+
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">账户<img src="assets/images/xinghao.png" height="7px"
+          width="7px">(不允许修改!)</ion-label>
+      <ion-input type="text" class="input2" placeholder="请输入账户" disabled="true" #accountid="ngModel" name="accountid"
+        required [(ngModel)]="accountId"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">供应商<img src="assets/images/xinghao.png" height="7px"
+          width="7px">(不允许修改!)</ion-label>
+      <ion-input type="text" class="input2" placeholder="请输入供应商名称" disabled="true" #suppliername="ngModel"
+        name="suppliername" required [(ngModel)]="supplierName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">款号<img src="assets/images/xinghao.png" height="7px"
+          width="7px">(不允许修改!)</ion-label>
+      <ion-input type="text" class="input2" placeholder="请输入款号" disabled="true" #stylenumber="ngModel"
+        name="stylenumber" required [(ngModel)]="styleNumber"></ion-input>
+    </ion-item>
+  </ion-list>
+  <form #form="ngForm">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">所属门店<img src="assets/images/xinghao.png" height="7px" width="7px">
+        </ion-label>
+        <ion-input type="text" id="shopName" class="input1" placeholder="请输入所属门店名称" readonly="true" #shopname="ngModel"
+          name="shopname" required [(ngModel)]="shopName"></ion-input>
+      </ion-item>
+      <div *ngIf="shopname.invalid && (shopname.dirty || shopname.touched)" class="invalid-tip">
+        <div *ngIf="shopname.errors.required">
+          <ion-icon name="alert-circle-outline"></ion-icon>所属门店是必填项
+        </div>
+      </div>
+      <ion-item>
+        <ion-label position="floating">数量<img src="assets/images/xinghao.png" height="7px" width="7px">
+          <ion-badge *ngIf="badge" color="danger">即将售罄</ion-badge>
+        </ion-label>
+        <ion-input type="number" id="quantity" placeholder="请输入数量" readonly="true" #quantityy="ngModel" name="quantityy"
+          required [(ngModel)]="quantity"></ion-input>
+      </ion-item>
+      <div *ngIf="quantityy.invalid && (quantityy.dirty || quantityy.touched)" class="invalid-tip">
+        <div *ngIf="quantityy.errors.required">
+          <ion-icon name="alert-circle-outline"></ion-icon>数量是必填项
+        </div>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating">图片<img src="assets/images/xinghao.png" height="7px" width="7px"></ion-label>
+        <ion-button slot="end" fill="clear" routerLink='../inventory-photo'>
+          <ion-icon name="camera-outline"></ion-icon>
+        </ion-button>
+        <ion-input type="text" id="photo" class="input1" placeholder="请插入图片" readonly="true" #photoo="ngModel"
+          name="photoo" required [(ngModel)]="photo"></ion-input>
+        
+      </ion-item>
+      <div *ngIf="photoo.invalid && (photoo.dirty || photoo.touched)" class="invalid-tip">
+        <div *ngIf="photoo.errors.required">
+          <ion-icon name="alert-circle-outline"></ion-icon>图片是必填项
+        </div>
+      </div>
+    </ion-list>
+  </form>
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">成本</ion-label>
+      <ion-input type="number" id="cost" class="input1" placeholder="请输入成本" readonly="true" [(ngModel)]="cost">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">售价</ion-label>
+      <ion-input type="number" id="price" class="input1" placeholder="请输入售价" readonly="true" [(ngModel)]="price">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">名称</ion-label>
+      <ion-input type="text" id="name" class="input1" placeholder="请输入名称" readonly="true" [(ngModel)]="name">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">颜色</ion-label>
+      <ion-input type="text" id="color" class="input1" placeholder="请输入颜色" readonly="true" [(ngModel)]="color">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">类别</ion-label>
+      <ion-input type="text" id="category" class="input1" placeholder="请输入类别" readonly="true" [(ngModel)]="category">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">标记</ion-label>
+      <ion-input type="text" id="tag" class="input1" placeholder="请输入标记" readonly="true" [(ngModel)]="tag">
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">上架时间</ion-label>
+      <ion-input type="datetime-local" id="upTime" class="input1" placeholder="请输入上架时间" readonly="true"
+        #uptime="ngModel" name="uptime" [(ngModel)]="upTime"></ion-input>
+    </ion-item>
+    <!-- <div *ngIf="uptime.invalid && (uptime.dirty || uptime.touched)" class="invalid-tip">
+            <div *ngIf="uptime.errors.required">
+                <ion-icon name="alert-circle-outline"></ion-icon>上架时间是必填项
+            </div>
+        </div> -->
+    <ion-item>
+      <ion-label position="floating">下架时间</ion-label>
+      <ion-input type="datetime-local" id="downTime" class="input1" placeholder="请输入下架时间" readonly="true"
+        #downtime="ngModel" name="downtime" [(ngModel)]="downTime"></ion-input>
+    </ion-item>
+    <!-- <div *ngIf="downtime.invalid && (downtime.dirty || downtime.touched)" class="invalid-tip">
+            <div *ngIf="downtime.errors.required">
+                <ion-icon name="alert-circle-outline"></ion-icon>下架时间是必填项
+            </div>
+        </div> -->
+    <ion-item>  
+      <ion-label>状态(是否上架)</ion-label>
+      <ion-toggle slot="end" [(ngModel)]="status" id="status" disabled="true"></ion-toggle>
+      <!-- <ion-select [(ngModel)]="status" id="status" disabled="true" #statuss="ngModel" name="statuss" cancel-text="取消"
+        ok-text="确认">
+        <ion-select-option>上架</ion-select-option>
+        <ion-select-option>下架</ion-select-option>
+      </ion-select> -->
+    </ion-item>
+    <!-- <div *ngIf="statuss.invalid && (statuss.dirty || statuss.touched)" class="invalid-tip">
+            <div *ngIf="statuss.errors.required">
+                <ion-icon name="alert-circle-outline"></ion-icon>状态是必填项
+            </div>
+        </div> -->
+    <ion-item>
+      <ion-label position="floating">尺码</ion-label>
+      <ion-select [(ngModel)]="size" id="size" disabled="true" class="md_3" cancel-text="取消" ok-text="确认">
+        <ion-select-option>均码</ion-select-option>
+        <ion-select-option>XXXS码</ion-select-option>
+        <ion-select-option>XXS码</ion-select-option>
+        <ion-select-option>XS码</ion-select-option>
+        <ion-select-option>S码</ion-select-option>
+        <ion-select-option>M码</ion-select-option>
+        <ion-select-option>L码</ion-select-option>
+        <ion-select-option>XL码</ion-select-option>
+        <ion-select-option>XXL码</ion-select-option>
+        <ion-select-option>XXXL码</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

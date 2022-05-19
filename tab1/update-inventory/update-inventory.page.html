@@ -1,0 +1,182 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-button [routerLink]="[ '/tab1' ]">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+                返回
+            </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button *ngIf="!update" (click)="edit()">
+                <ion-icon name="pencil-outline"></ion-icon>
+                编辑
+            </ion-button>
+            <ion-button *ngIf="update" (click)="onSubmit()" [disabled]="!form.valid">
+                <ion-icon name="save-outline"></ion-icon>
+                保存
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+    <form #form="ngForm">
+        <ion-list>
+            <ion-item>
+                <ion-label class="md_1">账户<img src="assets/images/xinghao.png" height="7px" width="7px"></ion-label>
+                <ion-input type="text" class="input2" placeholder="请输入账户" disabled="true" #accountid="ngModel"
+                    name="accountid" required [(ngModel)]="accountId"></ion-input>
+            </ion-item>
+            <div *ngIf="accountid.invalid && (accountid.dirty || accountid.touched)" class="invalid-tip">
+                <div *ngIf="accountid.errors.required">
+                    <ion-icon name="alert-circle-outline"></ion-icon>账户是必填项
+                </div>
+            </div>
+            <ion-item>
+                <ion-label class="md_1">供应商<img src="assets/images/xinghao.png" height="7px" width="7px"></ion-label>
+                <ion-input type="text" class="input2" placeholder="请输入供应商名称" disabled="true" #suppliername="ngModel"
+                    name="suppliername" required [(ngModel)]="supplierName"></ion-input>
+            </ion-item>
+            <div *ngIf="suppliername.invalid && (suppliername.dirty || suppliername.touched)" class="invalid-tip">
+                <div *ngIf="suppliername.errors.required">
+                    <ion-icon name="alert-circle-outline"></ion-icon>供应商是必填项
+                </div>
+            </div>
+            <ion-item>
+                <ion-label class="md_1">款号<img src="assets/images/xinghao.png" height="7px" width="7px"></ion-label>
+                <ion-input type="text" class="input2" placeholder="请输入款号" disabled="true" #stylenumber="ngModel"
+                    name="stylenumber" required [(ngModel)]="styleNumber"></ion-input>
+            </ion-item>
+            <div *ngIf="stylenumber.invalid && (stylenumber.dirty || shopname.touched)" class="invalid-tip">
+                <div *ngIf="stylenumber.errors.required">
+                    <ion-icon name="alert-circle-outline"></ion-icon>款号是必填项
+                </div>
+            </div>
+            <ion-item>
+                <ion-label class="md_1" position="floating">所属门店<img src="assets/images/xinghao.png" height="7px"
+                        width="7px"></ion-label>
+                <ion-input type="text" id="shopName" class="input1" placeholder="请输入所属门店名称" disabled="true"
+                    #shopname="ngModel" name="shopname" required [(ngModel)]="shopName"></ion-input>
+            </ion-item>
+            <div *ngIf="shopname.invalid && (shopname.dirty || shopname.touched)" class="invalid-tip">
+                <div *ngIf="shopname.errors.required">
+                    <ion-icon name="alert-circle-outline"></ion-icon>所属门店是必填项
+                </div>
+            </div>
+            <ion-item>
+                <ion-label class="md_1" position="floating">数量<img src="assets/images/xinghao.png" height="7px"
+                        width="7px"></ion-label>
+                <ion-input type="number" id="quantity" class="input1" placeholder="请输入数量" disabled="true"
+                    #quantityy="ngModel" name="quantityy" required [(ngModel)]="quantity"></ion-input>
+            </ion-item>
+            <div *ngIf="quantityy.invalid && (quantityy.dirty || quantityy.touched)" class="invalid-tip">
+                <div *ngIf="quantityy.errors.required">
+                    <ion-icon name="alert-circle-outline"></ion-icon>数量是必填项
+                </div>
+            </div>
+            <ion-item>
+                <ion-label class="md_1" position="floating">图片<img src="assets/images/xinghao.png" height="7px"
+                        width="7px"></ion-label>
+                <ion-input type="text" id="photo" class="input1" placeholder="请插入图片" disabled="true" #photoo="ngModel"
+                    name="photoo" required [(ngModel)]="photo"></ion-input>
+                <ion-button slot="end" fill="clear" routerLink='../inventory-photo'>
+                    <ion-icon name="camera-outline"></ion-icon>
+                </ion-button>
+            </ion-item>
+            <div *ngIf="photoo.invalid && (photoo.dirty || photoo.touched)" class="invalid-tip">
+                <div *ngIf="photoo.errors.required">
+                    <ion-icon name="alert-circle-outline"></ion-icon>图片是必填项
+                </div>
+            </div>
+        </ion-list>
+    </form>
+    <ion-list>
+        <ion-item>
+            <ion-label class="md_1" position="floating">成本</ion-label>
+            <ion-input type="number" id="cost" class="input1" placeholder="请输入成本" disabled="true" [(ngModel)]="cost">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label class="md_1" position="floating">售价</ion-label>
+            <ion-input type="number" id="price" class="input1" placeholder="请输入售价" disabled="true" [(ngModel)]="price">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label class="md_1" position="floating">名称</ion-label>
+            <ion-input type="text" id="name" class="input1" placeholder="请输入名称" disabled="true" [(ngModel)]="name">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label class="md_1" position="floating">颜色</ion-label>
+            <ion-input type="text" id="color" class="input1" placeholder="请输入颜色" disabled="true" [(ngModel)]="color">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label class="md_1" position="floating">尺码</ion-label>
+            <ion-select [(ngModel)]="size" id="size" disabled="true" class="md_3" cancel-text="取消" ok-text="确认">
+                <ion-select-option>均码</ion-select-option>
+                <ion-select-option>XXXS码</ion-select-option>
+                <ion-select-option>XXS码</ion-select-option>
+                <ion-select-option>XS码</ion-select-option>
+                <ion-select-option>S码</ion-select-option>
+                <ion-select-option>M码</ion-select-option>
+                <ion-select-option>L码</ion-select-option>
+                <ion-select-option>XL码</ion-select-option>
+                <ion-select-option>XXL码</ion-select-option>
+                <ion-select-option>XXXL码</ion-select-option>
+            </ion-select>
+        </ion-item>
+
+        <ion-item>
+            <ion-label class="md_1" position="floating">类别</ion-label>
+            <ion-input type="text" id="type" class="input1" placeholder="请输入类别" disabled="true" [(ngModel)]="type">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label class="md_1" position="floating">标记</ion-label>
+            <ion-input type="text" id="tag" class="input1" placeholder="请输入标记" disabled="true" [(ngModel)]="tag">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label class="md_1" position="floating">状态</ion-label>
+            <ion-select [(ngModel)]="status" id="status" class="md_3" disabled="true" #statuss="ngModel" name="statuss"
+                cancel-text="取消" ok-text="确认">
+                <ion-select-option>上架</ion-select-option>
+                <ion-select-option>下架</ion-select-option>
+            </ion-select>
+        </ion-item>
+        <!-- <div *ngIf="statuss.invalid && (statuss.dirty || statuss.touched)" class="invalid-tip">
+                <div *ngIf="statuss.errors.required">
+                    <ion-icon name="alert-circle-outline"></ion-icon>状态是必填项
+                </div>
+            </div> -->
+        <ion-item>
+            <ion-label class="md_1" position="floating">上架时间</ion-label>
+            <ion-input type="datetime-local" id="upTime" class="input1" placeholder="请输入上架时间" disabled="true"
+                #uptime="ngModel" name="uptime" [(ngModel)]="upTime"></ion-input>
+        </ion-item>
+        <!-- <div *ngIf="uptime.invalid && (uptime.dirty || uptime.touched)" class="invalid-tip">
+                <div *ngIf="uptime.errors.required">
+                    <ion-icon name="alert-circle-outline"></ion-icon>上架时间是必填项
+                </div>
+            </div> -->
+        <ion-item>
+            <ion-label class="md_1" position="floating">下架时间</ion-label>
+            <ion-input type="datetime-local" id="downTime" class="input1" placeholder="请输入下架时间" disabled="true"
+                #downtime="ngModel" name="downtime" [(ngModel)]="downTime"></ion-input>
+        </ion-item>
+        <!-- <div *ngIf="downtime.invalid && (downtime.dirty || downtime.touched)" class="invalid-tip">
+                <div *ngIf="downtime.errors.required">
+                    <ion-icon name="alert-circle-outline"></ion-icon>下架时间是必填项
+                </div>
+            </div> -->
+
+    </ion-list>
+
+</ion-content>

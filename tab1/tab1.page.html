@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-select placeholder="兴欣商店" [(ngModel)]="shopName" slot="start" cancelText="取消" okText="确定"
+      (ionChange)="change($event)">
+      <ion-select-option *ngFor="let shop of shops">{{shop.name}}</ion-select-option>
+    </ion-select>
+    <ion-title>库存</ion-title>
+    <ion-buttons slot="end" [routerLink]="[ '/add-inventory' ]">
+      <ion-button>
+        <ion-icon slot="start" name="add-outline"></ion-icon>
+        新增
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar class="b1" animated placeholder="供应商/款号" [(ngModel)]="searchText" (keyup)="getItem($event)"
+      (ionClear)="cancel($event)"></ion-searchbar>
+    <ion-button slot="end" fill="clear" routerLink='../inventory-photo'>
+      <ion-icon name="camera-outline"></ion-icon>
+    </ion-button>
+    <ion-button fill="clear" slot="end" (click)="search()">搜索</ion-button>
+  </ion-toolbar>
+  <ion-item lines="full">
+    <ion-label>类别</ion-label>
+    <ion-select cancel-text="取消" ok-text="确认" [(ngModel)]="category" (ionChange)="change1($event)">
+      <ion-select-option *ngFor="let category of categorys">{{category.categoryName}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item lines="full">
+    <ion-label>标记</ion-label>
+    <ion-select cancel-text="取消" ok-text="确认" [(ngModel)]="tag" (ionChange)="change2($event)">
+      <ion-select-option *ngFor="let tag of tags">{{tag.tagName}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item lines="full">
+    <ion-label>状态</ion-label>
+    <ion-toggle [(ngModel)]="status" (ionChange)="getItem1()">
+    </ion-toggle>
+  </ion-item>
+</ion-header>
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="加载中..." refreshingSpinner="circles"
+      refreshingText="加载中...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-item lines="full">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="3">商品种类数量:</ion-col>
+        <ion-col size="3">库存商品总数:</ion-col>
+        <ion-col size="3">库存总成本:</ion-col>
+        <ion-col size="3">库存预警商品数量:</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="3">{{productTypes}}种</ion-col>
+        <ion-col size="3">{{inventoryTotal}}件</ion-col>
+        <ion-col size="3">¥{{totalCost}}</ion-col>
+        <ion-col class="a1" size="3">{{warnNum}}种</ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <ion-list-header *ngIf="!noOne" class="over">
+    <ion-label>没有任何商品，您可以新增商品</ion-label>
+  </ion-list-header>
+  <ion-list lines="full" *ngFor="let inventory of inventorys">
+    <ion-item-sliding>
+      <ion-item [routerLink]="['/details']"
+        [queryParams]="{accountId: inventory.accountId, supplierName: inventory.supplierName, shopName: inventory.shopName, styleNumber: inventory.styleNumber, photo: inventory.photo, quantity: inventory.quantity, cost: inventory.cost, price: inventory.price, name: inventory.name, color: inventory.color, size: inventory.size, category: inventory.category, tag: inventory.tag, status: inventory.status, upTime: inventory.upTime, downTime: inventory.downTime, badge: inventory.badge}">
+        <ion-badge *ngIf="inventory.badge" color="danger" slot="end">即将售罄</ion-badge>
+        <ion-label>
+          <h2>供应商: {{inventory.supplierName}}</h2>
+          <h3>款号: {{inventory.styleNumber}}</h3>
+          <h3>成本: {{inventory.cost}}</h3>
+        </ion-label>
+        <ion-note slot="start">
+          <!-- {{inventory.photo}} -->
+        </ion-note>
+        <ion-note slot="end">数量:</ion-note>
+        <ion-note slot="end" class="a1" *ngIf="inventory.badge">{{inventory.quantity}}</ion-note>
+        <ion-note slot="end" *ngIf="!inventory.badge">{{inventory.quantity}}</ion-note>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="presentAlertConfirm(inventory.supplierName,inventory.styleNumber)">删除
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-item *ngIf="!hasMore" lines="full">
+    <ion-label class="over">
+      <h3>我是有底线的，没有更多库存了</h3>
+    </ion-label>
+  </ion-item>
+  <ion-infinite-scroll threshold="1%" [disabled]="false" position="bottom" (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="加载中...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
